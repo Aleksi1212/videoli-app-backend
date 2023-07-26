@@ -1,11 +1,18 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv'
-dotenv.config()
+import express from 'express';
+import dotenv from 'dotenv';
+import authenticationRoutes from './src/routes/authentication.routes';
+import userRoutes from './src/routes/user.routes';
 
-const app: Express = express();
+dotenv.config();
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('hello world');
+const app = express();
+
+app.use(express.json());
+app.use('/auth', authenticationRoutes);
+app.use('/user', userRoutes);
+
+app.get('/', (req, res) => {
+    res.send('service running');
 });
 
 app.listen(3000, () => {

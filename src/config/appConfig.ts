@@ -8,7 +8,7 @@ const config = {
     refreshTokenTtl: '1y',
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    googleOauthRedirectUrl: `${process.env.HOST}/oauth/session/google`,
+    googleOauthRedirectUrl: `${process.env.HOST}/auth/oauth/session/google`,
 };
 
 export default config;

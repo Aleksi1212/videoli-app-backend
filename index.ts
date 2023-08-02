@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import errorCatcher from './src/middleware/errorCatcher';
+
 import authenticationRoutes from './src/routes/authentication.routes';
 import userRoutes from './src/routes/user.routes';
 
@@ -12,6 +14,8 @@ app.use(cookieParser());
 
 app.use('/auth', authenticationRoutes);
 app.use('/user', userRoutes);
+
+app.use(errorCatcher);
 
 app.get('/', (req, res) => {
     res.send('service running');

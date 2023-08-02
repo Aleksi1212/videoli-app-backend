@@ -1,5 +1,7 @@
 import express from 'express';
-import getGoogleOauthUrl from '../utils/oauth.utils';
+import getGoogleOauthUrl from '../utils/googleOauth.utils';
+
+import { googleOauthHandler } from '../handlers/googleOauth.handler';
 
 const authenticationRoutes = express.Router();
 
@@ -20,8 +22,6 @@ authenticationRoutes
         res.status(301).redirect(getGoogleOauthUrl());
     })
 
-    .get('/oauth/session/google', (req, res) => {
-        res.json({ session: 'yay' });
-    });
+    .get('/oauth/session/google', googleOauthHandler);
 
 export default authenticationRoutes;

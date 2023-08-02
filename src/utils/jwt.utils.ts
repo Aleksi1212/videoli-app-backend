@@ -5,7 +5,6 @@ const jwtSecret = config.jwtSecret;
 
 interface VerifyJwtReturntypes {
     valid: boolean;
-    expired: boolean;
     decodedJwt: Object | null;
 }
 
@@ -21,13 +20,11 @@ function verifyJwt(token: string): VerifyJwtReturntypes {
         const decoded = jwt.verify(token, jwtSecret);
         return {
             valid: true,
-            expired: false,
             decodedJwt: decoded,
         };
     } catch (error: any) {
         return {
             valid: false,
-            expired: true,
             decodedJwt: null,
         };
     }

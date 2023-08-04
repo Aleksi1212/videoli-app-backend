@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 function errorCatcher(
-    err: RouteError,
+    err: RouteErrorTypes,
     req: Request,
     res: Response,
     next: NextFunction

@@ -1,4 +1,4 @@
-interface RouteError {
+interface RouteErrorTypes {
     statusCode: number
     message: string
 }

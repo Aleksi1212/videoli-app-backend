@@ -1,6 +1,7 @@
 import config from '../config/appConfig';
 import axios from 'axios';
 import qs from 'qs';
+import RouteError from '../utils/error.utils';
 
 interface GoogleTokensResults {
     access_token: string;
@@ -10,13 +11,14 @@ interface GoogleTokensResults {
     id_token: string;
 }
 
-interface GoogleTokenValues {
-    code: string;
-    client_id: string;
-    client_secret: string;
-    redirect_uri: string;
-    grant_type: string;
-}
+type GoogleTokenKey =
+    | 'code'
+    | 'client_id'
+    | 'client_secret'
+    | 'redirect_uri'
+    | 'grant_type';
+
+type GoogleTokenValues = Record<GoogleTokenKey, string>;
 
 async function getGoogleOauthTokens(
     googleOauthCode: string
@@ -41,13 +43,13 @@ async function getGoogleOauthTokens(
             }
         );
         const googleOauthTokensResponse = googleOauthTokensRequest.data;
+
         return googleOauthTokensResponse;
     } catch (error: any) {
         console.error(error.response.data.error);
-        throw new Error(error.message);
+        throw new RouteError(error.message);
     }
 }
-
 
 
 
@@ -87,7 +89,7 @@ async function getGoogleUserData({
         return googleUserResponse;
     } catch (error: any) {
         console.error(error.response.data.error);
-        throw new Error(error.message);
+        throw new RouteError(error.message);
     }
 }
 

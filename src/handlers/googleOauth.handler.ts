@@ -13,7 +13,7 @@ async function googleOauthHandler(
     next: NextFunction
 ) {
     const googleOauthCode = req.query.code as string;
-    let error: RouteErrorTypes;
+    let customError: RouteErrorTypes;
 
     try {
         const { id_token, access_token } = await getGoogleOauthTokens(
@@ -21,8 +21,8 @@ async function googleOauthHandler(
         );
         const googleUser = await getGoogleUserData({ id_token, access_token });
         if (!googleUser.verified_email) {
-            error = new RouteError('Google account not verified', 403);
-            return next(error);
+            customError = new RouteError('Google account not verified', 403);
+            return next(customError);
         }
 
         const userData = await findOrCreateUser({
@@ -31,13 +31,14 @@ async function googleOauthHandler(
             profilePicture: googleUser.picture,
         });
         if (!userData) {
-            error = new RouteError('Error creating user', 500);
-            return next(error);
+            customError = new RouteError('Error creating user', 500);
+            return next(customError);
         }
 
         res.json(userData);
     } catch (error: any) {
-        next(error);
+        customError = new RouteError(error.message, 500);
+        next(customError);
     }
 }
 

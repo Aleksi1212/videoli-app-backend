@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import errorCatcher from './src/middleware/errorCatcher';
+import { newSession } from './src/config/authConfig';
 
 import authenticationRoutes from './src/routes/authentication.routes';
 import userRoutes from './src/routes/user.routes';
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(newSession);
 
 app.use('/auth', authenticationRoutes);
 app.use('/user', userRoutes);

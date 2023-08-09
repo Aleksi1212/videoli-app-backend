@@ -4,7 +4,7 @@ dotenv.config();
 const config = {
     databaseUrl: process.env.DATABASE_URL,
     jwtSecret: process.env.JWT_SECRET,
-    accessTokenTtl: '20m',
+    accessTokenTtl: '30m',
     refreshTokenTtl: '1y',
     googleClientId: process.env.GOOGLE_CLIENT_ID,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,

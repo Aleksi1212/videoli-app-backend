@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import dotenv from 'dotenv';
 
 import {
     getGoogleOauthTokens,
@@ -11,6 +12,12 @@ import { signJwt } from '../utils/jwt.utils';
 import generateId from '../utils/hash.utils';
 import config from '../config/appConfig';
 import { refreshTokenCookieOptions } from '../config/authConfig';
+
+dotenv.config();
+const REDIRECT_URI =
+    process.env.WORKING_ENV === 'PROD'
+        ? 'https://videoli-app-frontend.pages.dev'
+        : 'http://localhost:5173';
 
 async function googleOauthHandler(
     req: Request,
@@ -42,9 +49,10 @@ async function googleOauthHandler(
         }
 
         const { email, name } = userData;
+        const userId = generateId(email, 20);
         session.email = email;
         session.name = name;
-        session.userId = generateId(email, 20);
+        session.userId = userId;
 
         const refreshToken = signJwt(
             { ...userData, session: session.id },
@@ -52,11 +60,13 @@ async function googleOauthHandler(
         );
         res.cookie('refreshToken', refreshToken, refreshTokenCookieOptions);
 
-        res.json(userData);
+        res.status(301).redirect(
+            `${REDIRECT_URI}/dashboard/recents/?uid=${userId}`
+        );
     } catch (error: any) {
         customError = new RouteError(error.message, 500);
         next(customError);
     }
 }
 
-export { googleOauthHandler };
+export default googleOauthHandler;

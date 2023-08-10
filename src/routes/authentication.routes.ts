@@ -1,14 +1,13 @@
 import express from 'express';
 import getGoogleOauthUrl from '../utils/googleOauth.utils';
 
-import { googleOauthHandler } from '../handlers/googleOauth.handler';
+import googleOauthHandler  from '../handlers/googleOauth.handler';
+import getAccessTokenHandler from '../handlers/getAccessToken.handler';
 
 const authenticationRoutes = express.Router();
 
 authenticationRoutes
-    .get('/getAccessToken', (req, res) => {
-        res.json({ accessToken: 'token' });
-    })
+    .get('/getAccessToken', getAccessTokenHandler)
 
     .post('/requestOneTimePassword', (req, res) => {
         res.json({ otpSent: 'true | false' });

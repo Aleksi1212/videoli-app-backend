@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 const envVariables = z.object({
+    WORKING_ENV: z.string(),
     HOST: z.string(),
     DATABASE_URL: z.string(),
     JWT_SECRET: z.string(),

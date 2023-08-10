@@ -5,7 +5,7 @@ const jwtSecret = config.jwtSecret;
 
 interface VerifyJwtReturntypes {
     valid: boolean;
-    decodedJwt: Object | null;
+    decodedJwt: any;
 }
 
 function signJwt(object: Object, options?: jwt.SignOptions): string {
@@ -25,7 +25,7 @@ function verifyJwt(token: string): VerifyJwtReturntypes {
     } catch (error: any) {
         return {
             valid: false,
-            decodedJwt: null,
+            decodedJwt: {},
         };
     }
 }

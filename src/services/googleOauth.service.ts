@@ -1,4 +1,4 @@
-import config from '../config/appConfig';
+import config from '../config/app.config';
 import axios from 'axios';
 import qs from 'qs';
 import RouteError from '../utils/error.utils';
@@ -50,8 +50,6 @@ async function getGoogleOauthTokens(
         throw new RouteError(error.message);
     }
 }
-
-
 
 type Tokens = {
     id_token: string;

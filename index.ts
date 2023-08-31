@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import errorCatcher from './src/middleware/errorCatcher';
-import { newSession } from './src/config/authConfig';
+import { newSession } from './src/config/auth.config';
 
 import authenticationRoutes from './src/routes/authentication.routes';
 import userRoutes from './src/routes/user.routes';

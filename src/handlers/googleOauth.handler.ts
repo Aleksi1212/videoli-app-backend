@@ -10,8 +10,8 @@ import { findOrCreateUser } from '../services/user.service';
 import RouteError from '../utils/error.utils';
 import { signJwt } from '../utils/jwt.utils';
 import generateId from '../utils/hash.utils';
-import config from '../config/appConfig';
-import { refreshTokenCookieOptions } from '../config/authConfig';
+import config from '../config/app.config';
+import { refreshTokenCookieOptions } from '../config/auth.config';
 
 dotenv.config();
 const REDIRECT_URI =

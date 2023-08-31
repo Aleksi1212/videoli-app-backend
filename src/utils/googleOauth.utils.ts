@@ -1,4 +1,4 @@
-import config from '../config/appConfig';
+import config from '../config/app.config';
 
 function getGoogleOauthUrl() {
     const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';

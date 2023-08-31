@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '../config/prisma.config';
 import generateId from '../utils/hash.utils';
-
-const prisma = new PrismaClient();
 
 interface UserData {
     email: string;
@@ -24,7 +22,6 @@ async function findOrCreateUser(userData: UserData): Promise<UserReturnData> {
         },
     });
     if (user) {
-        await prisma.$disconnect();
         return user;
     }
 
@@ -35,7 +32,6 @@ async function findOrCreateUser(userData: UserData): Promise<UserReturnData> {
         },
     });
 
-    await prisma.$disconnect();
     return createUser;
 }
 

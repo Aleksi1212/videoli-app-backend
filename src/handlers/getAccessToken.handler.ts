@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { signJwt, verifyJwt } from '../utils/jwt.utils';
 import RouteError from '../utils/error.utils';
-import config from '../config/appConfig';
+import config from '../config/app.config';
 
 function getAccessTokenHandler(
     req: Request,

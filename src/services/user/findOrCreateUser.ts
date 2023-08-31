@@ -10,6 +10,7 @@ interface UserData {
 type UserRole = 'USER' | 'ADMIN';
 
 interface UserReturnData extends UserData {
+    userId: string;
     role: UserRole;
 }
 

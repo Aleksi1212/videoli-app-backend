@@ -22,6 +22,7 @@ async function googleOauthHandler(
     res: Response,
     next: NextFunction
 ) {
+    const { refreshTokenTtl } = config;
     const session = req.session;
     const googleOauthCode = req.query.code as string;
     let customError: RouteErrorTypes;
@@ -46,15 +47,14 @@ async function googleOauthHandler(
             return next(customError);
         }
 
-        const { email, name } = userData;
-        const userId = generateId(email, 20);
+        const { userId, email, name } = userData;
         session.email = email;
         session.name = name;
         session.userId = userId;
 
         const refreshToken = signJwt(
             { ...userData, session: session.id },
-            { expiresIn: config.refreshTokenTtl }
+            { expiresIn: refreshTokenTtl }
         );
         const redirectUrl = `${REDIRECT_URI}/dashboard/recents/?uid=${userId}`;
 

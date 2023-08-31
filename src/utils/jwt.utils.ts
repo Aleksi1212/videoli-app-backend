@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/app.config';
 
-const jwtSecret = config.jwtSecret;
+const { jwtSecret } = config;
 
 interface VerifyJwtReturntypes {
     valid: boolean;

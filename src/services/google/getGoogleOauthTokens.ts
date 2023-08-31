@@ -23,12 +23,15 @@ type GoogleTokenValues = Record<GoogleTokenKey, string>;
 async function getGoogleOauthTokens(
     googleOauthCode: string
 ): Promise<GoogleTokensResults> {
+    const { googleClientId, googleClientSecret, googleOauthRedirectUrl } =
+        config;
+
     const googleOauthTokenUrl = 'https://oauth2.googleapis.com/token';
     const googleOauthTokenQueryValues: GoogleTokenValues = {
         code: googleOauthCode,
-        client_id: config.googleClientId,
-        client_secret: config.googleClientSecret,
-        redirect_uri: config.googleOauthRedirectUrl,
+        client_id: googleClientId,
+        client_secret: googleClientSecret,
+        redirect_uri: googleOauthRedirectUrl,
         grant_type: 'authorization_code',
     };
 

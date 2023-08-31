@@ -9,9 +9,10 @@ function getAccessTokenHandler(
     res: Response,
     next: NextFunction
 ) {
-    let customError: RouteErrorTypes;
+    const { accessTokenTtl } = config;
     const refreshToken = req.cookies.refreshToken as string;
     const sessionId = req.sessionID;
+    let customError: RouteErrorTypes;
 
     const { valid, decodedJwt } = verifyJwt(refreshToken);
     if (!valid) {
@@ -25,7 +26,7 @@ function getAccessTokenHandler(
 
     const { iat, exp, ...jwtData } = decodedJwt;
     const accessToken = signJwt(jwtData, {
-        expiresIn: config.accessTokenTtl,
+        expiresIn: accessTokenTtl,
     });
     res.status(201).json({ accessToken });
 }

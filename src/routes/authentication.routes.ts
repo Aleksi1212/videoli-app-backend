@@ -1,8 +1,8 @@
 import express from 'express';
 import getGoogleOauthUrl from '../utils/googleOauth.utils';
 
-import googleOauthHandler  from '../handlers/googleOauth.handler';
-import getAccessTokenHandler from '../handlers/getAccessToken.handler';
+import googleOauthHandler from '../handlers/authentication/googleOauth.handler';
+import getAccessTokenHandler from '../handlers/authentication/getAccessToken.handler';
 
 const authenticationRoutes = express.Router();
 

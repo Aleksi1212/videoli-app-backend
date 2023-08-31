@@ -1,5 +1,5 @@
-import { prisma } from '../config/prisma.config';
-import generateId from '../utils/hash.utils';
+import { prisma } from '../../config/prisma.config';
+import generateId from '../../utils/hash.utils';
 
 interface UserData {
     email: string;
@@ -35,4 +35,4 @@ async function findOrCreateUser(userData: UserData): Promise<UserReturnData> {
     return createUser;
 }
 
-export { findOrCreateUser };
+export default findOrCreateUser;

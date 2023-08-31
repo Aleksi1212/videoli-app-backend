@@ -1,17 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 
-import {
-    getGoogleOauthTokens,
-    getGoogleUserData,
-} from '../services/googleOauth.service';
-import { findOrCreateUser } from '../services/user.service';
+import getGoogleUserData from '../../services/google/getGoogleUserData';
+import getGoogleOauthTokens from '../../services/google/getGoogleOauthTokens';
+import findOrCreateUser from '../../services/user/findOrCreateUser';
 
-import RouteError from '../utils/error.utils';
-import { signJwt } from '../utils/jwt.utils';
-import generateId from '../utils/hash.utils';
-import config from '../config/app.config';
-import { refreshTokenCookieOptions } from '../config/auth.config';
+import RouteError from '../../utils/error.utils';
+import { signJwt } from '../../utils/jwt.utils';
+import generateId from '../../utils/hash.utils';
+import config from '../../config/app.config';
+import { refreshTokenCookieOptions } from '../../config/auth.config';
 
 dotenv.config();
 const REDIRECT_URI =
@@ -58,11 +56,10 @@ async function googleOauthHandler(
             { ...userData, session: session.id },
             { expiresIn: config.refreshTokenTtl }
         );
-        res.cookie('refreshToken', refreshToken, refreshTokenCookieOptions);
+        const redirectUrl = `${REDIRECT_URI}/dashboard/recents/?uid=${userId}`;
 
-        res.status(301).redirect(
-            `${REDIRECT_URI}/dashboard/recents/?uid=${userId}`
-        );
+        res.cookie('refreshToken', refreshToken, refreshTokenCookieOptions);
+        res.status(301).redirect(redirectUrl);
     } catch (error: any) {
         customError = new RouteError(error.message, 500);
         next(customError);
